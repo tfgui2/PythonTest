@@ -35,7 +35,6 @@ class RotaryEncoder:
         GPIO.setup(pin_clk, GPIO.IN, GPIO.PUD_UP)
         GPIO.setup(pin_dt, GPIO.IN, GPIO.PUD_UP)
         self.state=RotaryEncoder.R_START
-        print(RotaryEncoder.ttable[0][0])
         
     def getdirection(self):
         pin1=GPIO.input(self.pin1)

@@ -1,4 +1,5 @@
 #rotary encoder
+import button
 import RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -35,6 +36,7 @@ class RotaryEncoder:
         GPIO.setup(pin_clk, GPIO.IN, GPIO.PUD_UP)
         GPIO.setup(pin_dt, GPIO.IN, GPIO.PUD_UP)
         self.state=RotaryEncoder.R_START
+        self.btn=button.Button(pin_sw)
         
     def getdirection(self):
         pin1=GPIO.input(self.pin1)
@@ -47,6 +49,9 @@ class RotaryEncoder:
         elif dir==RotaryEncoder.DIR_CCW:
             return -1
         return 0
+    
+    def getbutton(self):
+        return self.btn.run()
 
 
 if __name__ == '__main__':

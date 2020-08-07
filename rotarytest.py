@@ -11,3 +11,5 @@ while running:
         print('rotate right')
     elif dir==-1:
         print('left')
+    if re.getbutton():
+        print('press')

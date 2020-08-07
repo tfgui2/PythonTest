@@ -1,8 +1,10 @@
 import rotaryencoder
-re = rotaryencoder.RotaryEncoder(2,3,4)
+re = rotaryencoder.RotaryEncoder(17,18,4)
 
 running=True
 while running:
-    if re.getdirection() != 0:
-        print('rotate')
-        running=False
+    dir=re.getdirection()
+    if dir== 1:
+        print('rotate right')
+    elif dir==-1:
+        print('left')

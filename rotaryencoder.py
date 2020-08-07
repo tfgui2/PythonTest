@@ -1,4 +1,8 @@
 #rotary encoder
+import RPi.GPIO as GPIO
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+
 class RotaryEncoder:
     DIR_NONE=0x0
     DIR_CW=0x10
@@ -25,17 +29,17 @@ class RotaryEncoder:
         ]
     
     def __init__(self, pin_clk, pin_dt, pin_sw):
-        self.pin1=pin_clk
-        self.pin2=pin_dt
+        self.pin1=pin_dt
+        self.pin2=pin_clk
         self.sw=pin_sw
+        GPIO.setup(pin_clk, GPIO.IN, GPIO.PUD_UP)
+        GPIO.setup(pin_dt, GPIO.IN, GPIO.PUD_UP)
         self.state=RotaryEncoder.R_START
         print(RotaryEncoder.ttable[0][0])
         
     def getdirection(self):
-        #pin1=digitalRead(self.pin1)
-        #pin2=digitalRead(self.pin2)
-        pin1=1
-        pin2=1
+        pin1=GPIO.input(self.pin1)
+        pin2=GPIO.input(self.pin2)
         pinstate=(pin2<<1)|(pin1)
         self.state=RotaryEncoder.ttable[self.state&0xf][pinstate]
         dir=self.state&0x30

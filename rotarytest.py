@@ -1,6 +1,6 @@
 import time
 import rotaryencoder
-re = rotaryencoder.RotaryEncoder(17,18,4)
+re = rotaryencoder.RotaryEncoder(17,18,27)
 
 running=True
 while running:

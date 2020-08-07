@@ -1,6 +1,5 @@
-
 import pygame
-import Button
+import ui_button
 
 ### init
 pygame.init()
@@ -18,9 +17,9 @@ blue = (0, 0, 128)
 
 ### buttons
 buttons = []
-btn1 = Button.Button(1, (10,100))
+btn1 = ui_button.Button(1, (10,100))
 buttons.append(btn1)
-btn2 = Button.ToggleButton(2, (200,100))
+btn2 = ui_button.ToggleButton(2, (200,100))
 buttons.append(btn2)
 
 

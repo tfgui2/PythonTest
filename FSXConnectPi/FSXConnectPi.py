@@ -7,16 +7,17 @@ gui=mainui.MainUI()
 import rotaryencoder
 enc=rotaryencoder.RotaryEncoder(17,18,27)
 
-running=True
-while running:
-    time.sleep(0.001)
+gui.running=True
+lastrendertime = 0
+while gui.running:
+    #time.sleep(0.001)
 
-    dir=re.getdirection()
+    dir=enc.getdirection()
     if dir== 1:
         print('rotate right')
     elif dir==-1:
         print('left')
-    if re.getbutton():
+    if enc.getbutton():
         print('press')
         
     #gui event
@@ -24,4 +25,7 @@ while running:
         print('event')
         
     #gui render
-    gui.render()
+    rendertime = time.time()-lastrendertime
+    if rendertime>0.1:
+        gui.render()
+        lastrendertime=time.time()

@@ -20,31 +20,34 @@ class MainUI:
         btn2 = ui_button.ToggleButton(2, (200,100))
         self.buttons.append(btn2)
         self.running=True
+        # rendering start
+        screen.blit(self.background, (0,0))
 
     def getevent(self):
         for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            self.running = False
-            return True
+            if event.type == pygame.QUIT:
+                self.running = False
+                self.close()
+                return True
 
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mousepos = event.pos
-            for bt in self.buttons:
-                if bt.check(mousepos):
-                    print (bt.id)
-                    return True
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mousepos = event.pos
+                for bt in self.buttons:
+                    if bt.check(mousepos):
+                        print (bt.id)
+                        return True
         return False
         
     def render(self):
         # rendering start
-        screen.blit(background, (0,0))
+        #screen.blit(self.background, (0,0))
         
         # display text
         text = font.render('FSXConnect', True, green, blue)
         screen.blit(text, (10,10))
         
         # display buttons
-        for bt in buttons:
+        for bt in self.buttons:
             bt.display(screen)
 
         pygame.display.update()

@@ -2,11 +2,12 @@ import pygame
 
 buttonon = pygame.image.load('button_on.bmp')
 buttonoff = pygame.image.load('button_off.bmp')
+buttonmode=pygame.image.load('button_mode.bmp')
 green = (0, 128, 64) 
 blue = (0, 0, 128)
 
 pygame.font.init()
-font = pygame.font.Font('freesansbold.ttf', 16) 
+font = pygame.font.Font('freesansbold.ttf', 20) 
 
 
 class Button:
@@ -17,7 +18,7 @@ class Button:
         rect.top = pos[1]
         self.rect = rect
         self.id = id
-        self.text = font.render('button'+str(self.id), True, green)
+        self.text = font.render('btn'+str(self.id), True, green)
         self.textrect = self.text.get_rect()
         self.textrect.center = (self.rect.width // 2, self.rect.height // 2)
         self.textrect.left += self.rect.left
@@ -56,3 +57,21 @@ class ToggleButton(Button):
         surface.blit(self.text, self.textrect)
 
 
+class ModeButton:
+    def __init__(self, pos):
+        rect = buttonmode.get_rect()
+        rect.left = pos[0]
+        rect.top = pos[1]
+        self.rect = rect
+    
+    def check(self, point):
+        if self.rect.collidepoint(point):
+            return True
+        return False
+    
+    def pos(self):
+        return (self.rect.left, self.rect.top)
+
+    def display(self, surface):
+        surface.blit(buttonmode, self.pos())
+        

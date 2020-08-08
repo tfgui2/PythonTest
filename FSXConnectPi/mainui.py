@@ -5,9 +5,11 @@ pygame.init()
 pygame.font.init()
 pygame.display.set_caption('FSXConnectPI')
 screen = pygame.display.set_mode((720,480))
-font = pygame.font.Font('freesansbold.ttf', 16)
+font1 = pygame.font.Font('freesansbold.ttf', 16)
+font2= pygame.font.SysFont('consolas', 30)
 green = (0, 128, 64) 
 blue = (0, 0, 128)
+btnmode=ui_button.ModeButton((35,50))
 
 class MainUI:
     def __init__(self):
@@ -16,15 +18,35 @@ class MainUI:
         self.background = pygame.image.load('background.bmp')
         ### buttons
         self.buttons = []
-        btn1 = ui_button.Button(1, (10,100))
-        self.buttons.append(btn1)
-        btn2 = ui_button.ToggleButton(2, (200,100))
-        self.buttons.append(btn2)
-        btn3=ui_button.Button(3, (300,100))
-        self.buttons.append(btn3)
-
+        self.makebuttons()
         # rendering start
         screen.blit(self.background, (0,0))
+        text = font1.render('FSXConnectPI', True, green, blue)
+        screen.blit(text, (20,15))
+        
+        
+    def makebuttons(self):
+        x=50
+        dx=130
+        y=210
+        for i in range(1,6):
+            self.addbutton(i, (x,y), False)
+            x +=dx
+            
+        x=50
+        dx=130
+        y=340
+        for i in range(6,11):
+            self.addbutton(i, (x,y), True)
+            x +=dx
+        
+        
+    def addbutton(self, id, pos, toggle):
+        if toggle:
+            btn=ui_button.ToggleButton(id, pos)
+        else:
+            btn=ui_button.Button(id, pos)
+        self.buttons.append(btn)
 
     def getevent(self):
         for event in pygame.event.get():
@@ -39,15 +61,27 @@ class MainUI:
                     if bt.check(mousepos):
                         print (bt.id)
                         return True
+                if btnmode.check(mousepos):
+                    print('mode')
+                    return True
         return False
+    
+    def displaytext(self):
+        x=230
+        line1 = 60
+        line2 = 100
+        text = font2.render('hello world', True, blue)
+        screen.blit(text, (x,line1))
+        screen.blit(font2.render('hello world', True, blue), (x,line2))
+        
         
     def render(self):
         # rendering start
         #screen.blit(self.background, (0,0))
+        btnmode.display(screen)
         
         # display text
-        text = font.render('FSXConnect', True, green, blue)
-        screen.blit(text, (10,10))
+        self.displaytext()
         
         # display buttons
         for bt in self.buttons:

@@ -7,6 +7,8 @@ gui=mainui.MainUI()
 import rotaryencoder
 enc=rotaryencoder.RotaryEncoder(18,17,27)
 enc2=rotaryencoder.RotaryEncoder(23,22,24)
+#udp
+import udp
 
 gui.running=True
 lastrendertime = 0
@@ -17,8 +19,10 @@ while gui.running:
     dir=enc.getdirection()
     if dir== 1:
         print('rotate right')
+        udp.udpsend('right')
     elif dir==-1:
         print('left')
+        udp.udpsend('left')
     if enc.getbutton():
         print('press')
         

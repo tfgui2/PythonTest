@@ -11,6 +11,7 @@ blue = (0, 0, 128)
 
 class MainUI:
     def __init__(self):
+        self.running=True
         ### resource
         self.background = pygame.image.load('background.bmp')
         ### buttons
@@ -19,7 +20,9 @@ class MainUI:
         self.buttons.append(btn1)
         btn2 = ui_button.ToggleButton(2, (200,100))
         self.buttons.append(btn2)
-        self.running=True
+        btn3=ui_button.Button(3, (300,100))
+        self.buttons.append(btn3)
+
         # rendering start
         screen.blit(self.background, (0,0))
 
@@ -56,3 +59,8 @@ class MainUI:
         pygame.quit()
         
         
+if __name__=='__main__':
+    gui=MainUI()
+    while True:
+        gui.getevent()
+        gui.render()

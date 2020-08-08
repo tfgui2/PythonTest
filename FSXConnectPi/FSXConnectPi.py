@@ -19,10 +19,10 @@ while gui.running:
     dir=enc.getdirection()
     if dir== 1:
         print('rotate right')
-        udp.udpsend('right')
+        udp.udpsend('right'.encode())
     elif dir==-1:
         print('left')
-        udp.udpsend('left')
+        udp.udpsend('left'.encode())
     if enc.getbutton():
         print('press')
         

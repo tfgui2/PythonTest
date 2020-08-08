@@ -4,12 +4,13 @@ import ui_button
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption('FSXConnectPI')
-screen = pygame.display.set_mode((720,480))
+screen = pygame.display.set_mode((720,480), pygame.FULLSCREEN)
 font1 = pygame.font.Font('freesansbold.ttf', 16)
-font2= pygame.font.SysFont('consolas', 30)
+font2 = pygame.font.Font('freesansbold.ttf', 30)
 green = (0, 128, 64) 
 blue = (0, 0, 128)
 btnmode=ui_button.ModeButton((35,50))
+pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
 class MainUI:
     def __init__(self):

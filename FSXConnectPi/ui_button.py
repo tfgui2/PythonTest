@@ -7,7 +7,7 @@ green = (0, 128, 64)
 blue = (0, 0, 128)
 
 pygame.font.init()
-font = pygame.font.Font('freesansbold.ttf', 20) 
+font = pygame.font.Font('freesansbold.ttf', 24) 
 
 
 class Button:

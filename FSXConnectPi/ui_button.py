@@ -2,7 +2,8 @@ import pygame
 
 buttonon = pygame.image.load('button_on.bmp')
 buttonoff = pygame.image.load('button_off.bmp')
-buttonmode=pygame.image.load('button_mode.bmp')
+buttonmodeon=pygame.image.load('button_mode_on.bmp')
+buttonmodeoff=pygame.image.load('button_mode_off.bmp')
 green = (0, 128, 64) 
 blue = (0, 0, 128)
 
@@ -18,12 +19,7 @@ class Button:
         rect.top = pos[1]
         self.rect = rect
         self.id = id
-        self.text = font.render('btn'+str(self.id), True, green)
-        self.textrect = self.text.get_rect()
-        self.textrect.center = (self.rect.width // 2, self.rect.height // 2)
-        self.textrect.left += self.rect.left
-        self.textrect.top += self.rect.top
-
+        self.setlabel('btn'+str(self.id))
     
     def check(self, point):
         if self.rect.collidepoint(point):
@@ -36,16 +32,28 @@ class Button:
     def display(self, surface):
         surface.blit(buttonoff, self.pos())
         surface.blit(self.text, self.textrect)
+     
+    def setlabel(self, label):
+        self.text = font.render(label, True, green)
+        self.textrect = self.text.get_rect()
+        self.textrect.center = (self.rect.width // 2, self.rect.height // 2)
+        self.textrect.left += self.rect.left
+        self.textrect.top += self.rect.top
         
 
 class ToggleButton(Button):
     def __init__(self, id, pos):
         Button.__init__(self, id, pos)
         self.on = False
+        self.toggleenable=False
+        
+    def settoggleenable(self, toggleenable):
+        self.toggleenable=toggleenable
 
     def check(self, point):
         if Button.check(self, point):
-            self.on = not self.on
+            if self.toggleenable:
+                self.on = not self.on
             return True
         return False
 
@@ -57,21 +65,14 @@ class ToggleButton(Button):
         surface.blit(self.text, self.textrect)
 
 
-class ModeButton:
+class ModeButton(ToggleButton):
     def __init__(self, pos):
-        rect = buttonmode.get_rect()
-        rect.left = pos[0]
-        rect.top = pos[1]
-        self.rect = rect
-    
-    def check(self, point):
-        if self.rect.collidepoint(point):
-            return True
-        return False
-    
-    def pos(self):
-        return (self.rect.left, self.rect.top)
+        ToggleButton.__init__(self,0,pos)
+        self.toggleenable=True
 
     def display(self, surface):
-        surface.blit(buttonmode, self.pos())
+        if self.on:
+            surface.blit(buttonmodeon, self.pos())
+        else:
+            surface.blit(buttonmodeoff, self.pos())
         

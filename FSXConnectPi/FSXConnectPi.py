@@ -24,16 +24,16 @@ try:
         elif dir==-1:
             udp.udpsend(bytes([1]))
         if enc.getbutton():
-            print('press')
+            udp.udpsend(bytes([5]))
             
         #enc2
         dir2=enc2.getdirection()
         if dir2== 1:
-            print('2 right')
+            udp.udpsend(bytes([4]))
         elif dir2==-1:
-            print('2 left')
+            udp.udpsend(bytes([3]))
         if enc2.getbutton():
-            print('2 press')
+            udp.udpsend(bytes([5]))
             
         #gui event
         if gui.getevent():

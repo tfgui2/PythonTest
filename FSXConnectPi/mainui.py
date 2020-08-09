@@ -124,9 +124,6 @@ class MainUI:
         if btnmode.on:
             self.buttonselectstate(buttonid)
             return
-        
-        if buttonid==9:
-            self.close()
             
         if self.state==STATE_AUTO:
             self.process_auto(buttonid)
@@ -186,6 +183,10 @@ class MainUI:
             
     
     def buttonselectstate(self, buttonid):
+        if buttonid==9:
+            self.close()
+            return
+        
         if buttonid<len(btnlabel):
             self.state=buttonid
         btnmode.off()

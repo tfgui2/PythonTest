@@ -83,4 +83,7 @@ class ModeButton(ToggleButton):
             surface.blit(buttonmodeon, self.pos())
         else:
             surface.blit(buttonmodeoff, self.pos())
+    def off(self):
+        self.on=False
+        self.isdirt=True
         

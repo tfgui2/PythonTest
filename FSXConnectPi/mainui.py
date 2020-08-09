@@ -119,7 +119,7 @@ class MainUI:
     def buttonselectstate(self, buttonid):
         if buttonid<len(btnlabel):
             self.state=buttonid
-        btnmode.on=False
+        btnmode.off()
         self.updatelabels()
         
         

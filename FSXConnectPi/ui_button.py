@@ -20,6 +20,7 @@ class Button:
         self.rect = rect
         self.id = id
         self.setlabel('btn'+str(self.id))
+        self.isdirt=True
     
     def check(self, point):
         if self.rect.collidepoint(point):
@@ -30,6 +31,11 @@ class Button:
         return (self.rect.left, self.rect.top)
 
     def display(self, surface):
+        if self.isdirt:
+            self._display(surface)
+            self.isdirt=False
+        
+    def _display(self, surface):
         surface.blit(buttonoff, self.pos())
         surface.blit(self.text, self.textrect)
      
@@ -39,6 +45,7 @@ class Button:
         self.textrect.center = (self.rect.width // 2, self.rect.height // 2)
         self.textrect.left += self.rect.left
         self.textrect.top += self.rect.top
+        self.isdirt=True
         
 
 class ToggleButton(Button):
@@ -49,15 +56,16 @@ class ToggleButton(Button):
         
     def settoggleenable(self, toggleenable):
         self.toggleenable=toggleenable
-
+        
     def check(self, point):
         if Button.check(self, point):
             if self.toggleenable:
                 self.on = not self.on
+                self.isdirt=True
             return True
         return False
 
-    def display(self, surface):
+    def _display(self, surface):
         if self.on:
             surface.blit(buttonon, self.pos())
         else:
@@ -70,7 +78,7 @@ class ModeButton(ToggleButton):
         ToggleButton.__init__(self,0,pos)
         self.toggleenable=True
 
-    def display(self, surface):
+    def _display(self, surface):
         if self.on:
             surface.blit(buttonmodeon, self.pos())
         else:

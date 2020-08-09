@@ -4,10 +4,15 @@ import ui_button
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption('FSXConnectPI')
-screen = pygame.display.set_mode((720,480), pygame.FULLSCREEN)
+IS_FULLSCREEN=False
+if IS_FULLSCREEN:
+    screen = pygame.display.set_mode((720,480), pygame.FULLSCREEN)
+else:
+    screen = pygame.display.set_mode((720,480))
+
 font1 = pygame.font.Font('freesansbold.ttf', 16)
 font2 = pygame.font.Font('freesansbold.ttf', 30)
-green = (0, 128, 64) 
+green = (0, 210, 0) 
 blue = (0, 0, 128)
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
@@ -145,7 +150,7 @@ class MainUI:
         boxtop=50
         boxwidth=460
         boxheight=120
-        pygame.draw.rect(screen, green, [200,50,460,120])
+        pygame.draw.rect(screen, green, [210,45,450,90])
         x=230
         line1 = 60
         line2 = 100

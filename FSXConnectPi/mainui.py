@@ -13,7 +13,7 @@ else:
 
 font1 = pygame.font.Font('freesansbold.ttf', 16)
 font2 = pygame.font.Font('freesansbold.ttf', 30)
-green = (0, 210, 0) 
+green = (0, 210, 0)
 blue = (0, 0, 128)
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
@@ -29,7 +29,7 @@ STATE_GPS=6
 modelabel=['auto','audio','com1','com2','nav1','nav2','gps','','','','']
 btnlabel= [
     ['a','b','c','d','e','f'],
-    ['1','2','3','4','5','6','7','8','9','10'],
+    ['com1','com2','nav1','nav2'],
     ['1','2','3','4','5','6'],
     ['1','2','3','4','5','6'],
     ['1','2','3','4','5','6'],
@@ -59,7 +59,7 @@ class MainUI:
     def addbutton(self, id, pos, toggle=False):
         btn=ui_button.ToggleButton(id, pos)
         btn.settoggleenable(toggle)
-        self.buttons.append(btn)     
+        self.buttons.append(btn)
         
     def makebuttons(self):
         #buttonid : 0 ~ 9
@@ -75,13 +75,15 @@ class MainUI:
             self.addbutton(i, (x,y), True)
             x +=dx
             
-        self.updatelabels()    
+        self.updatelabels()
+        
         
     def updatetogglememory(self):
         toggles=[]
         for b in self.buttons:
             toggles.append(b.on)
         togglememory[self.state]=toggles
+        
     def restoretoggle(self):
         toggles=togglememory[self.state]
         i=0
@@ -117,6 +119,9 @@ class MainUI:
                 b.on=False
             index+=1
  
+
+    ######################################################
+    #
     def processbutton(self, buttonid):
         if btnmode.on:
             self.buttonselectstate(buttonid)
@@ -126,14 +131,30 @@ class MainUI:
             self.close()
             
         if self.state==STATE_AUDIO:
-            if buttonid==0:
-                self.eventid=COM1_TRANSMIT_SELECT
-            if buttonid==1:
-                self.eventid=COM2_TRANSMIT_SELECT
-            print(self.eventid)
-            
-            
+            self.process_audio(buttonid)
+        elif self.state==STATE_AUTO:
+            self.process_auto(buttonid)
+        elif self.state==STATE_COM1:
+            self.process_com1(buttonid)
+
+
+    def process_audio(self, buttonid):
+        if buttonid==0:
+            self.eventid=COM1_TRANSMIT_SELECT
+        if buttonid==1:
+            self.eventid=COM2_TRANSMIT_SELECT
         
+    def process_auto(self, buttonid):
+        pass
+            
+    def process_com1(self, buttonid):
+        if buttonid==0:
+            self.eventid=COM_STBY_RADIO_SWAP
+        if buttonid==1:
+            self.eventid=COM_STBY_RADIO_SWAP
+        
+            
+    
     def buttonselectstate(self, buttonid):
         if buttonid<len(btnlabel):
             self.state=buttonid

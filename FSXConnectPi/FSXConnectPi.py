@@ -34,6 +34,7 @@ actiontable2=[
     [NAV2_RADIO_SWAP, NAV2_RADIO_FRACT_INC, NAV2_RADIO_FRACT_DEC],
     [GPS_CURSOR_BUTTON, GPS_PAGE_KNOB_INC, GPS_PAGE_KNOB_DEC],
     ]
+
 # encoder run
 def encoder_run():
     eventid=EVENT_NONE

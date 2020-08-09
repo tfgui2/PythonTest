@@ -1,4 +1,5 @@
 #FSXConnectPi
+from ClientEvents import *
 import time
 #gui
 import mainui
@@ -20,20 +21,21 @@ try:
         #enc1
         dir=enc.getdirection()
         if dir== 1:
-            udp.udpsend(bytes([2]))
+            udp.udpsend(bytes([COM_RADIO_WHOLE_INC]))
         elif dir==-1:
-            udp.udpsend(bytes([1]))
+            udp.udpsend(bytes([COM_RADIO_WHOLE_DEC]))
         if enc.getbutton():
-            udp.udpsend(bytes([5]))
+            #udp.udpsend(bytes([COM_STBY_RADIO_SWAP]))
+            udp.udpbytesend(COM_STBY_RADIO_SWAP)
             
         #enc2
         dir2=enc2.getdirection()
         if dir2== 1:
-            udp.udpsend(bytes([4]))
+            udp.udpsend(bytes([COM_RADIO_FRACT_INC]))
         elif dir2==-1:
-            udp.udpsend(bytes([3]))
+            udp.udpsend(bytes([COM_RADIO_FRACT_DEC]))
         if enc2.getbutton():
-            udp.udpsend(bytes([5]))
+            udp.udpsend(bytes([COM_STBY_RADIO_SWAP]))
             
         #gui event
         if gui.getevent():

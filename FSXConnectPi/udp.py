@@ -5,6 +5,10 @@ host=('192.168.10.9', 1234)
 def udpsend(msg):
     sock.sendto(msg, host)
     
+def udpbytesend(byte):
+    sock.sendto(bytes([byte]), host)
+    
+    
 def main():
     while True:
         msg = input("input:");

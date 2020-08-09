@@ -32,7 +32,7 @@ btnlabel= [
     ['stby','stby'],
     ['stby','stby'],
     ['stby','stby'],
-    ['nrst','msg', '', '', '', 'dir','menu','clr','ent'],
+    ['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
     
     ]
 
@@ -138,6 +138,8 @@ class MainUI:
             self.process_nav1(buttonid)
         elif self.state==STATE_NAV2:
             self.process_nav2(buttonid)
+        elif self.state==STATE_GPS:
+            self.process_gps(buttonid)
             
     #ap hdg nav apr rev alt
     table_auto=[
@@ -164,7 +166,23 @@ class MainUI:
     def process_nav2(self, buttonid):
         if buttonid==0 or buttonid==1:
             self.eventid=NAV2_RADIO_SWAP
-        
+    
+    #nrst msg - - - dir menu clr ent
+    table_gps=[
+        GPS_NEAREST_BUTTON,
+        GPS_MSG_BUTTON,
+        EVENT_NONE,
+        EVENT_NONE,
+        EVENT_NONE,
+        GPS_DIRECTTO_BUTTON,
+        GPS_MENU_BUTTON,
+        GPS_CLEAR_BUTTON,
+        GPS_ENTER_BUTTON,
+        GPS_CLEAR_ALL_BUTTON
+        ]
+    def process_gps(self, buttonid):
+        if buttonid>=0 and buttonid<len(self.table_gps):
+            self.eventid=self.table_gps[buttonid]
             
     
     def buttonselectstate(self, buttonid):

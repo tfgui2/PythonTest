@@ -14,32 +14,42 @@ import udp
 gui.running=True
 lastrendertime = 0
 
+def encoder_run():
+    eventid=EVENT_NONE
+    #enc1
+    dir1=enc.getdirection()
+    if dir1== 1:
+        eventid=COM_RADIO_WHOLE_INC
+    elif dir1==-1:
+        eventid=COM_RADIO_WHOLE_DEC
+    if enc.getbutton():
+        eventid=COM_STBY_RADIO_SWAP
+    #enc2
+    dir2=enc2.getdirection()
+    if dir2== 1:
+        eventid=COM_RADIO_FRACT_INC
+    elif dir2==-1:
+        eventid=COM_RADIO_FRACT_DEC
+    if enc2.getbutton():
+        eventid=COM_STBY_RADIO_SWAP
+    
+    return eventid
+    
+
 try:
     while gui.running:
         #time.sleep(0.001)
 
-        #enc1
-        dir=enc.getdirection()
-        if dir== 1:
-            udp.udpsend(bytes([COM_RADIO_WHOLE_INC]))
-        elif dir==-1:
-            udp.udpsend(bytes([COM_RADIO_WHOLE_DEC]))
-        if enc.getbutton():
-            #udp.udpsend(bytes([COM_STBY_RADIO_SWAP]))
-            udp.udpbytesend(COM_STBY_RADIO_SWAP)
-            
-        #enc2
-        dir2=enc2.getdirection()
-        if dir2== 1:
-            udp.udpsend(bytes([COM_RADIO_FRACT_INC]))
-        elif dir2==-1:
-            udp.udpsend(bytes([COM_RADIO_FRACT_DEC]))
-        if enc2.getbutton():
-            udp.udpsend(bytes([COM_STBY_RADIO_SWAP]))
-            
+        #input
+        event_id=encoder_run()
+        if event_id>EVENT_NONE:
+            udp.udpbytesend(event_id)
         #gui event
-        if gui.getevent():
-            print('event')
+        gui.run()
+        event_id=gui.getevent()
+        if event_id>EVENT_NONE:
+            udp.udpbytesend(event_id)
+            
             
         #gui render
         rendertime = time.time()-lastrendertime

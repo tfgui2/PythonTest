@@ -1,4 +1,5 @@
 #main ui
+from ClientEvents import *
 import pygame
 import ui_button
 pygame.init()
@@ -17,6 +18,14 @@ blue = (0, 0, 128)
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
 btnmode=ui_button.ModeButton((35,50))
+
+STATE_AUTO=0
+STATE_AUDIO=1
+STATE_COM1=2
+STATE_COM2=3
+STATE_NAV1=4
+STATE_NAV2=5
+modelabel=['auto','audio','com1','com2','nav1','nav2','','','','','']
 btnlabel= [
     ['a','b','c','d','e','f'],
     ['1','2','3','4','5','6','7','8','9','10'],
@@ -26,15 +35,14 @@ btnlabel= [
     ['1','2','3','4','5','6'],
     ['1','2','3','4','5','6'],
     ]
-modelabel=['auto','audio','com1','com2','nav1','nav2','','','','','']
-#states=('ap', 'au', 'com1', 'com2', 'nav1', 'nav2')
-#togglememory=[]
+
 togglememory=[[0,0,0,0,0, 0,0,0,0,0]]*len(modelabel)
 
 
 class MainUI:
     def __init__(self):
-        self.state=0
+        self.state=STATE_AUDIO
+        self.eventid=0
         self.running=True
         ### resource
         self.background = pygame.image.load('background.bmp')
@@ -115,6 +123,14 @@ class MainUI:
         if buttonid==9:
             self.close()
             
+        if self.state==STATE_AUDIO:
+            if buttonid==0:
+                self.eventid=COM1_TRANSMIT_SELECT
+            if buttonid==1:
+                self.eventid=COM2_TRANSMIT_SELECT
+            print(self.eventid)
+            
+            
         
     def buttonselectstate(self, buttonid):
         if buttonid<len(btnlabel):
@@ -123,26 +139,29 @@ class MainUI:
         self.updatelabels()
         
         
-    def getevent(self):
+    def run(self):
+        self.eventid=0
         if self.running==False:
             return
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.close()
-                return True
+                
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mousepos = event.pos
                 for bt in self.buttons:
                     if bt.check(mousepos):
                         self.processbutton(bt.id)
-                        return True
+                        
                 if btnmode.check(mousepos):
                     if btnmode.on:
                         self.updatetogglememory()
                     self.updatelabels()
-                    return True
-        return False
+                
+    
+    def getevent(self):
+        return self.eventid
     
     
     def displaytext(self):
@@ -184,6 +203,7 @@ if __name__=='__main__':
     gui=MainUI()
     
     while gui.running:
+        gui.run()
         gui.getevent()
         gui.render()
     

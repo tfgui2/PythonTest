@@ -1,6 +1,6 @@
 #read text
 items=['EVENT_NONE']
-with open('C:/Users/tfgui/Documents/ClientEvents.txt','r') as f:
+with open('C:/Users/tfgui/Documents/PythonTest/ClientEvents.txt','r') as f:
     lines=f.readlines()
     for i in lines:
         temp=i.strip()

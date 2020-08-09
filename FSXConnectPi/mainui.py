@@ -47,6 +47,7 @@ class MainUI:
         self.buttons.append(btn)     
         
     def makebuttons(self):
+        #buttonid : 0 ~ 9
         dx=130
         x=50
         y=210
@@ -102,11 +103,13 @@ class MainUI:
             index+=1
  
     def processbutton(self, buttonid):
-        print (buttonid)
-        
         if btnmode.on:
             self.buttonselectstate(buttonid)
             return
+        
+        if buttonid==9:
+            self.close()
+            
         
     def buttonselectstate(self, buttonid):
         if buttonid<len(btnlabel):

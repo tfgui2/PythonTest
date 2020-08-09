@@ -20,9 +20,9 @@ try:
         #enc1
         dir=enc.getdirection()
         if dir== 1:
-            udp.udpsend(bytes([1]))
-        elif dir==-1:
             udp.udpsend(bytes([2]))
+        elif dir==-1:
+            udp.udpsend(bytes([1]))
         if enc.getbutton():
             print('press')
             

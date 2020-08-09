@@ -21,10 +21,10 @@ try:
         dir=enc.getdirection()
         if dir== 1:
             print('rotate right')
-            udp.udpsend('right'.encode())
+            udp.udpsend(byte([1]))
         elif dir==-1:
             print('left')
-            udp.udpsend('left'.encode())
+            udp.udpsend(byte([2]))
         if enc.getbutton():
             print('press')
             

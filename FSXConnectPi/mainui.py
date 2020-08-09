@@ -17,7 +17,7 @@ green = (0, 210, 0)
 blue = (0, 0, 128)
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
-btnmode=ui_button.ModeButton((35,50))
+btnmode=ui_button.ModeButton((35,40))
 
 STATE_AUTO=0
 STATE_AUDIO=1

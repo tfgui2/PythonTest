@@ -20,11 +20,9 @@ try:
         #enc1
         dir=enc.getdirection()
         if dir== 1:
-            print('rotate right')
-            udp.udpsend(byte([1]))
+            udp.udpsend(bytes([1]))
         elif dir==-1:
-            print('left')
-            udp.udpsend(byte([2]))
+            udp.udpsend(bytes([2]))
         if enc.getbutton():
             print('press')
             
@@ -43,7 +41,7 @@ try:
             
         #gui render
         rendertime = time.time()-lastrendertime
-        if rendertime>0.1:
+        if rendertime>0.3:
             gui.render()
             lastrendertime=time.time()
             

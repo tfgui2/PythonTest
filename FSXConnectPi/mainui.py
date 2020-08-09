@@ -4,7 +4,7 @@ import ui_button
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption('FSXConnectPI')
-screen = pygame.display.set_mode((720,480))#, pygame.FULLSCREEN)
+screen = pygame.display.set_mode((720,480), pygame.FULLSCREEN)
 font1 = pygame.font.Font('freesansbold.ttf', 16)
 font2 = pygame.font.Font('freesansbold.ttf', 30)
 green = (0, 128, 64) 
@@ -141,6 +141,11 @@ class MainUI:
     
     
     def displaytext(self):
+        boxleft=200
+        boxtop=50
+        boxwidth=460
+        boxheight=120
+        pygame.draw.rect(screen, green, [200,50,460,120])
         x=230
         line1 = 60
         line2 = 100
@@ -153,7 +158,7 @@ class MainUI:
             return
         
         # rendering start
-        screen.blit(self.background, (0,0))
+        #screen.blit(self.background, (0,0))
         
         # display text
         self.displaytext()

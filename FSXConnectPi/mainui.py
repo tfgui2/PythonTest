@@ -20,22 +20,20 @@ pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 btnmode=ui_button.ModeButton((35,40))
 
 STATE_AUTO=0
-STATE_AUDIO=1
-STATE_COM1=2
-STATE_COM2=3
-STATE_NAV1=4
-STATE_NAV2=5
-STATE_GPS=6
-modelabel=['auto','audio','com1','com2','nav1','nav2','gps','','','','']
+STATE_COM1=1
+STATE_COM2=2
+STATE_NAV1=3
+STATE_NAV2=4
+STATE_GPS=5
+modelabel=['auto','com1','com2','nav1','nav2','gps','','','','']
 btnlabel= [
-    ['a','b','c','d','e','f'],
-    ['com1','com2','nav1','nav2'],
-    ['1','2','3','4','5','6'],
-    ['1','2','3','4','5','6'],
-    ['1','2','3','4','5','6'],
-    ['1','2','3','4','5','6'],
-    ['1','2','3','4','5','6'],
-    ['1','2','3','4','5','6'],
+    ['ap','hdg','nav','apr','rev','alt'],
+    ['stby','stby'],
+    ['stby','stby'],
+    ['stby','stby'],
+    ['stby','stby'],
+    ['nrst','msg', '', '', '', 'dir','menu','clr','ent'],
+    
     ]
 
 togglememory=[[0,0,0,0,0, 0,0,0,0,0]]*len(modelabel)
@@ -43,7 +41,7 @@ togglememory=[[0,0,0,0,0, 0,0,0,0,0]]*len(modelabel)
 
 class MainUI:
     def __init__(self):
-        self.state=STATE_AUDIO
+        self.state=STATE_COM1
         self.eventid=0
         self.running=True
         ### resource
@@ -72,7 +70,7 @@ class MainUI:
         x=50
         y=340
         for i in range(5,10):
-            self.addbutton(i, (x,y), True)
+            self.addbutton(i, (x,y))
             x +=dx
             
         self.updatelabels()
@@ -130,28 +128,42 @@ class MainUI:
         if buttonid==9:
             self.close()
             
-        if self.state==STATE_AUDIO:
-            self.process_audio(buttonid)
-        elif self.state==STATE_AUTO:
+        if self.state==STATE_AUTO:
             self.process_auto(buttonid)
         elif self.state==STATE_COM1:
             self.process_com1(buttonid)
-
-
-    def process_audio(self, buttonid):
-        if buttonid==0:
-            self.eventid=COM1_TRANSMIT_SELECT
-        if buttonid==1:
-            self.eventid=COM2_TRANSMIT_SELECT
-        
+        elif self.state==STATE_COM2:
+            self.process_com2(buttonid)
+        elif self.state==STATE_NAV1:
+            self.process_nav1(buttonid)
+        elif self.state==STATE_NAV2:
+            self.process_nav2(buttonid)
+            
+    #ap hdg nav apr rev alt
+    table_auto=[
+        AP_MASTER,
+        AP_HDG_HOLD,
+        AP_NAV1_HOLD,
+        AP_APR_HOLD,
+        AP_BC_HOLD,
+        AP_ALT_HOLD,
+        ]
     def process_auto(self, buttonid):
-        pass
+        if buttonid>=0 and buttonid<len(self.table_auto):
+            self.eventid=self.table_auto[buttonid]
             
     def process_com1(self, buttonid):
-        if buttonid==0:
+        if buttonid==0 or buttonid==1:
             self.eventid=COM_STBY_RADIO_SWAP
-        if buttonid==1:
-            self.eventid=COM_STBY_RADIO_SWAP
+    def process_com2(self, buttonid):
+        if buttonid==0 or buttonid==1:
+            self.eventid=COM2_RADIO_SWAP
+    def process_nav1(self, buttonid):
+        if buttonid==0 or buttonid==1:
+            self.eventid=NAV1_RADIO_SWAP
+    def process_nav2(self, buttonid):
+        if buttonid==0 or buttonid==1:
+            self.eventid=NAV2_RADIO_SWAP
         
             
     

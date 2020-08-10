@@ -130,7 +130,11 @@ class MainUI:
     def selectsubstate(self, buttonid):
         if buttonid<len(buttonlabels.get(self.state)):
             self.substate=self.state*10+buttonid
-            print(self.substate)
+            for b in self.buttons:
+                if b.id==buttonid:
+                    b.setonoff(True)
+                else:
+                    b.setonoff(False)
         
         
     def run(self):

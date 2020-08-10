@@ -22,7 +22,7 @@ buttonlabels={
     STATE_NAV1:['audio','stby','stby',],
     STATE_NAV2:['audio','stby','stby',],
     STATE_GPS:['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
-    STATE_INST:['hdg','obs1','obs2']
+    STATE_INST:['hdg','obs']
     }
 
 buttonactions={

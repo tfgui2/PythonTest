@@ -57,6 +57,10 @@ class ToggleButton(Button):
     def settoggleenable(self, toggleenable):
         self.toggleenable=toggleenable
         
+    def setonoff(self, onoff):
+        self.on=onoff
+        self.isdirt=True
+        
     def check(self, point):
         if Button.check(self, point):
             if self.toggleenable:

@@ -13,7 +13,7 @@ enc2=rotaryencoder.RotaryEncoder(23,22,24)
 import udp
 
 
-actiontable=[
+rotarytable=[
     # button,  rotate right,  rotate left
     [EVENT_NONE, AP_ALT_VAR_INC, AP_ALT_VAR_DEC],
     [COM_STBY_RADIO_SWAP, COM_RADIO_WHOLE_INC, COM_RADIO_WHOLE_DEC],
@@ -23,7 +23,7 @@ actiontable=[
     [GPS_CURSOR_BUTTON, GPS_GROUP_KNOB_INC, GPS_GROUP_KNOB_DEC],
     ]
 
-actiontable2=[
+rotarytable2=[
     # button,  rotate right,  rotate left
     [EVENT_NONE, AP_VS_VAR_INC, AP_VS_VAR_DEC],
     [COM_STBY_RADIO_SWAP, COM_RADIO_FRACT_INC, COM_RADIO_FRACT_DEC],
@@ -39,16 +39,16 @@ def encoder_run():
     #enc1
     rotate=enc.getdirection()
     if rotate!=0: # 0 is no rotate
-        eventid=actiontable[gui.state][rotate]
+        eventid=rotarytable[gui.state][rotate]
     elif enc.getbutton():
-        eventid=actiontable[gui.state][0]
+        eventid=rotarytable[gui.state][0]
                     
     #enc2
     rotate=enc2.getdirection()
     if rotate!=0:
-        eventid=actiontable2[gui.state][rotate]
+        eventid=rotarytable2[gui.state][rotate]
     elif enc2.getbutton():
-        eventid=actiontable2[gui.state][0]
+        eventid=rotarytable2[gui.state][0]
     
     return eventid
     

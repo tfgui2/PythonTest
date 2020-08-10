@@ -1,0 +1,30 @@
+from ClientEvents import *
+
+STATE_AUTO=0
+STATE_COM1=1
+STATE_COM2=2
+STATE_NAV1=3
+STATE_NAV2=4
+STATE_GPS=5
+STATE_END=6
+# STATE  0~ max 9
+# button 0~ max 9
+statelabel=['AutoP','COM1','COM2','NAV1','NAV2','GPS','','','','quit']
+
+buttonlabels={
+    STATE_AUTO:['ap','hdg','nav','apr','rev','alt','','','','nav/gps'],
+    STATE_COM1:['audio','stby','stby',],
+    STATE_COM2:['audio','stby','stby',],
+    STATE_NAV1:['audio','stby','stby',],
+    STATE_NAV2:['audio','stby','stby',],
+    STATE_GPS:['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
+    }
+
+buttonactions={
+    STATE_AUTO:[AP_MASTER, AP_HDG_HOLD, AP_NAV1_HOLD, AP_APR_HOLD, AP_BC_HOLD, AP_ALT_HOLD, EVENT_NONE, EVENT_NONE, EVENT_NONE, TOGGLE_GPS_DRIVES_NAV1,],
+    STATE_COM1:[COM1_TRANSMIT_SELECT, COM_STBY_RADIO_SWAP, COM_STBY_RADIO_SWAP,],
+    STATE_COM2:[COM2_TRANSMIT_SELECT, COM2_RADIO_SWAP, COM2_RADIO_SWAP,],
+    STATE_NAV1:[RADIO_VOR1_IDENT_TOGGLE, NAV1_RADIO_SWAP, NAV1_RADIO_SWAP,],
+    STATE_NAV2:[RADIO_VOR2_IDENT_TOGGLE, NAV2_RADIO_SWAP, NAV2_RADIO_SWAP,],
+    STATE_GPS :[GPS_NEAREST_BUTTON, GPS_MSG_BUTTON, EVENT_NONE, EVENT_NONE, EVENT_NONE, GPS_DIRECTTO_BUTTON, GPS_MENU_BUTTON, GPS_CLEAR_BUTTON, GPS_ENTER_BUTTON, GPS_CLEAR_ALL_BUTTON],
+    }

@@ -26,6 +26,7 @@ togglememory=[[0,0,0,0,0, 0,0,0,0,0]]*STATE_END
 class MainUI:
     def __init__(self):
         self.state=STATE_COM1
+        self.substate=0
         self.eventid=0
         self.running=True
         ### resource
@@ -108,9 +109,11 @@ class MainUI:
             self.selectstate(buttonid)
             return
         actions=buttonactions.get(self.state)
-        if actions and buttonid<len(actions):
-            self.eventid=actions[buttonid]
-            print(self.eventid)         
+        if actions:
+            if buttonid<len(actions):
+                self.eventid=actions[buttonid]
+        else:
+            self.selectsubstate(buttonid)
     
     def selectstate(self, buttonid):
         if buttonid==9:
@@ -118,9 +121,15 @@ class MainUI:
             return
         if buttonid<STATE_END:
             self.state=buttonid
+            self.substate=0
         btnmode.off()
         self.displaytext()
         self.updatelabels()
+        
+    def selectsubstate(self, buttonid):
+        if buttonid<len(buttonlabels.get(self.state)):
+            self.substate=self.state*10+buttonid
+            print(self.substate)
         
         
     def run(self):
@@ -146,6 +155,11 @@ class MainUI:
     
     def getevent(self):
         return self.eventid
+    
+    def getrotarystate(self):
+        if self.substate>0:
+            return self.substate
+        return self.state
     
          
     def displaytext(self):

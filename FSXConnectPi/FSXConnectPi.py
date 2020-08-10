@@ -1,5 +1,6 @@
 #FSXConnectPi
 from ClientEvents import *
+from UITable import *
 import time
 #gui
 import mainui
@@ -13,25 +14,6 @@ enc2=rotaryencoder.RotaryEncoder(23,22,24)
 import udp
 
 
-rotarytable=[
-    # button,  rotate right,  rotate left
-    [EVENT_NONE, AP_ALT_VAR_INC, AP_ALT_VAR_DEC],
-    [COM_STBY_RADIO_SWAP, COM_RADIO_WHOLE_INC, COM_RADIO_WHOLE_DEC],
-    [COM2_RADIO_SWAP, COM2_RADIO_WHOLE_INC, COM2_RADIO_WHOLE_DEC],
-    [NAV1_RADIO_SWAP, NAV1_RADIO_WHOLE_INC, NAV1_RADIO_WHOLE_DEC],
-    [NAV2_RADIO_SWAP, NAV2_RADIO_WHOLE_INC, NAV2_RADIO_WHOLE_DEC],
-    [GPS_CURSOR_BUTTON, GPS_GROUP_KNOB_INC, GPS_GROUP_KNOB_DEC],
-    ]
-
-rotarytable2=[
-    # button,  rotate right,  rotate left
-    [EVENT_NONE, AP_VS_VAR_INC, AP_VS_VAR_DEC],
-    [COM_STBY_RADIO_SWAP, COM_RADIO_FRACT_INC, COM_RADIO_FRACT_DEC],
-    [COM2_RADIO_SWAP, COM2_RADIO_FRACT_INC, COM2_RADIO_FRACT_DEC],
-    [NAV1_RADIO_SWAP, NAV1_RADIO_FRACT_INC, NAV1_RADIO_FRACT_DEC],
-    [NAV2_RADIO_SWAP, NAV2_RADIO_FRACT_INC, NAV2_RADIO_FRACT_DEC],
-    [GPS_CURSOR_BUTTON, GPS_PAGE_KNOB_INC, GPS_PAGE_KNOB_DEC],
-    ]
 
 # encoder run
 def encoder_run():
@@ -39,16 +21,28 @@ def encoder_run():
     #enc1
     rotate=enc.getdirection()
     if rotate!=0: # 0 is no rotate
-        eventid=rotarytable[gui.state][rotate]
+        rotarystate=gui.getrotarystate()
+        events=rotarytable.get(rotarystate)
+        if events:
+            eventid=events[rotate]
     elif enc.getbutton():
-        eventid=rotarytable[gui.state][0]
+        rotarystate=gui.getrotarystate()
+        events=rotarytable.get(rotarystate)
+        if events:
+            eventid=events[0]
                     
     #enc2
     rotate=enc2.getdirection()
     if rotate!=0:
-        eventid=rotarytable2[gui.state][rotate]
+        rotarystate=gui.getrotarystate()
+        events=rotarytable2.get(rotarystate)
+        if events:
+            eventid=events[rotate]
     elif enc2.getbutton():
-        eventid=rotarytable2[gui.state][0]
+        rotarystate=gui.getrotarystate()
+        events=rotarytable2.get(rotarystate)
+        if events:
+            eventid=events[0]
     
     return eventid
     
@@ -78,3 +72,4 @@ except KeyboardInterrupt:
     print('quit')
     
     
+

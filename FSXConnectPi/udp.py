@@ -1,6 +1,6 @@
+from setting import *  # for host
 import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-host=('192.168.10.9', 1234)
 
 def udpsend(msg):
     sock.sendto(msg, host)

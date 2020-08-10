@@ -1,7 +1,8 @@
 #main ui
+from setting import *
 from ClientEvents import *
 from UITable import *
-from UITable import *
+
 import pygame
 import ui_button
 pygame.init()

@@ -8,7 +8,7 @@ import ui_button
 pygame.init()
 pygame.font.init()
 pygame.display.set_caption('FSXConnectPI')
-IS_FULLSCREEN=False
+
 if IS_FULLSCREEN:
     screen = pygame.display.set_mode((720,480), pygame.FULLSCREEN)
 else:

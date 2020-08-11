@@ -46,6 +46,9 @@ def encoder_run():
     
     return eventid
 
+def processreply(reply):
+    print(reply)
+    pass
     
 
 # main loop
@@ -68,7 +71,7 @@ while gui.running:
             if request>0:
                 udp.udpbytesend(request)
                 reply=udp.udpreceive()
-                self.processreply(reply)
+                processreply(reply)
                 
             
         #gui render

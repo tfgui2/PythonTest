@@ -66,7 +66,7 @@ def drawfreq():
     global activefreq
     global stbyfreq
     print(activefreq)
-    str='1%d <-> 1%d'%(activefreq,stbyfreq)
+    str='%d <-> %d'%(activefreq+10000,stbyfreq+10000)
     gui.drawtext(2, str)
                      
 
@@ -80,35 +80,35 @@ def rotaryrequest(event_id):
 # main loop
 lastrendertime = 0
 while gui.running:
+    #time.sleep(0.001)
+
+    #rotary input
+    event_id=encoder_run()
+    if event_id>EVENT_NONE:
+        udp.udpbytesend(event_id)
+        rotaryrequest(event_id)
+        
+    #gui event
+    gui.run()
+    event_id=gui.getevent()
+    if event_id>EVENT_NONE:
+        udp.udpbytesend(event_id)
+    else:
+        request=gui.requestdata
+        if request>0:
+            udp.udpbytesend(request)
+            
+            
+    #gui render
+    if (time.time()-lastrendertime)>0.3:
+        gui.render()
+        lastrendertime=time.time()
+        
+    #udp receive
     try:
-        #time.sleep(0.001)
-
-        #input
-        event_id=encoder_run()
-        if event_id>EVENT_NONE:
-            udp.udpbytesend(event_id)
-            rotaryrequest(event_id)
-            
-        #gui event
-        gui.run()
-        event_id=gui.getevent()
-        if event_id>EVENT_NONE:
-            udp.udpbytesend(event_id)
-        else:
-            request=gui.requestdata
-            if request>0:
-                udp.udpbytesend(request)
-                reply=udp.udpreceive()
-                processreply(reply)
-                
-            
-        #gui render
-        if (time.time()-lastrendertime)>0.3:
-            gui.render()
-            lastrendertime=time.time()
-            
-    except KeyboardInterrupt:
-        print('quit')
+        reply=udp.udpreceive()
+        processreply(reply)
+    except:
+        pass
     
     
-

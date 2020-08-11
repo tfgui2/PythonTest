@@ -2,7 +2,7 @@ from setting import *  # for host
 import time
 import socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-#sock.setblocking(False)
+sock.setblocking(False)
 
 
 def udpsend(msg):
@@ -20,7 +20,7 @@ def udpreceive():
         else:
             print('nonono')
     except:
-            print('except')
+        pass
     
 def main():
     while True:        

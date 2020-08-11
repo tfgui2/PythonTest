@@ -105,10 +105,15 @@ while gui.running:
         lastrendertime=time.time()
         
     #udp receive
+    """
     try:
         reply=udp.udpreceive()
         processreply(reply)
     except:
         pass
+    """
+    reply=udp.udpreceive()
+    if reply:
+        processreply(reply)
     
     

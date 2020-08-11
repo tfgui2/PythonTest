@@ -14,6 +14,8 @@ enc2=rotaryencoder.RotaryEncoder(23,22,24)
 import udp
 
 
+activefreq=0
+stbyfreq=0
 
 # encoder run
 def encoder_run():
@@ -48,8 +50,17 @@ def encoder_run():
 
 def processreply(reply):
     print(reply)
-    pass
+    temp=reply.split(',')
     
+    if temp[0]=='1':
+        activefreq=int(temp[1])
+        stbyfreq=int(temp[2])
+        drawfreq()
+        
+def drawfreq():
+    str='1%d <-> 1%d"%(activefreq,stbyfreq)
+    gui.drawtext(2, str)
+                     
 
 # main loop
 lastrendertime = 0

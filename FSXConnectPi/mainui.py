@@ -176,7 +176,11 @@ class MainUI:
             return self.substate
         return self.state
     
-         
+    def drawtext(self,line,str):
+        if line==2:
+            self.text2=font2.render(str, True, blue)
+        
+    
     def displaytext(self):
         self.text = font2.render(statelabel[self.state], True, blue)
         self.text2= font2.render('hello world', True, blue)

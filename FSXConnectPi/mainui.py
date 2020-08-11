@@ -123,6 +123,11 @@ class MainUI:
         if buttonid<STATE_END:
             self.state=buttonid
             self.substate=0
+            # gps로 변경시 panel_3
+            if self.state==STATE_GPS:
+                self.eventid=PANEL_3
+                
+            
         btnmode.off()
         self.displaytext()
         self.updatelabels()

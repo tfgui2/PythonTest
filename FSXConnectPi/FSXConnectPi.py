@@ -50,6 +50,8 @@ def encoder_run():
 
 def processreply(reply):
     print(reply)
+    if reply==None:
+        return
     temp1=reply.decode('utf-8')
     temp=temp1.split(',')
     

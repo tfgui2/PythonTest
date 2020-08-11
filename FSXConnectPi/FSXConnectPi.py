@@ -45,12 +45,13 @@ def encoder_run():
             eventid=events[0]
     
     return eventid
+
     
 
 # main loop
-try:
-    lastrendertime = 0
-    while gui.running:
+lastrendertime = 0
+while gui.running:
+    try:
         #time.sleep(0.001)
 
         #input
@@ -62,14 +63,21 @@ try:
         event_id=gui.getevent()
         if event_id>EVENT_NONE:
             udp.udpbytesend(event_id)
+        else:
+            request=gui.requestdata
+            if request>0:
+                udp.udpbytesend(request)
+                reply=udp.udpreceive()
+                self.processreply(reply)
+                
             
         #gui render
         if (time.time()-lastrendertime)>0.3:
             gui.render()
             lastrendertime=time.time()
             
-except KeyboardInterrupt:
-    print('quit')
+    except KeyboardInterrupt:
+        print('quit')
     
     
 

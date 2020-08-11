@@ -29,6 +29,7 @@ class MainUI:
         self.state=STATE_COM1
         self.substate=0
         self.eventid=0
+        self.requestdata=0
         self.running=True
         ### resource
         self.background = pygame.image.load('background.bmp')
@@ -126,6 +127,8 @@ class MainUI:
             # gps로 변경시 panel_3
             if self.state==STATE_GPS:
                 self.eventid=PANEL_3
+            elif self.state==STATE_COM1:
+                self.requestdata=100
                 
             
         btnmode.off()
@@ -144,6 +147,8 @@ class MainUI:
         
     def run(self):
         self.eventid=0
+        self.requestdata=0
+        
         if self.running==False:
             return
         

@@ -50,15 +50,23 @@ def encoder_run():
 
 def processreply(reply):
     print(reply)
-    temp=reply.split(',')
+    temp1=reply.decode('utf-8')
+    temp=temp1.split(',')
     
     if temp[0]=='1':
+        global activefreq
+        global stbyfreq
         activefreq=int(temp[1])
         stbyfreq=int(temp[2])
         drawfreq()
+    else:
+        print('nono:', temp[0])
         
 def drawfreq():
-    str='1%d <-> 1%d"%(activefreq,stbyfreq)
+    global activefreq
+    global stbyfreq
+    print(activefreq)
+    str='1%d <-> 1%d'%(activefreq,stbyfreq)
     gui.drawtext(2, str)
                      
 
@@ -72,6 +80,10 @@ while gui.running:
         event_id=encoder_run()
         if event_id>EVENT_NONE:
             udp.udpbytesend(event_id)
+            if event_id<5:
+                print('request100')
+                udp.udpbytesend(100)
+                processreply(udp.udpreceive())
         #gui event
         gui.run()
         event_id=gui.getevent()

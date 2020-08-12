@@ -102,7 +102,7 @@ while gui.running:
             
             
     #gui render
-    if (time.time()-lastrendertime)>0.3:
+    if (time.time()-lastrendertime)>0.05:
         if gui.render():
             lastrendertime=time.time()
         

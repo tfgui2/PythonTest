@@ -64,7 +64,13 @@ def processreply(reply):
         stbyfreq=int(temp[2])
         drawfreq()
     elif requestid ==104:
-        gui.setaptoggle(temp[1])
+        states=[]
+        for t in temp[1:]:
+            if t=='0':
+                states.append(False)
+            else:
+                states.append(True)
+        gui.setaptoggle(states)
     else:
         print('nono:', temp[0])
         

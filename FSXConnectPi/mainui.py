@@ -128,6 +128,13 @@ class MainUI:
             else:
                 b.on=False
             index+=1
+            
+    def setaptoggle(self, states):
+        index=0
+        for s in states:
+            self.buttons[index].setonoff(s)
+            index +=1
+            
  
 
     ######################################################

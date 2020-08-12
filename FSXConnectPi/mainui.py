@@ -31,6 +31,10 @@ class MainUI:
         self.eventid=0
         self.requestdata=0
         self.running=True
+        self.buttondown=False
+        self.mousepos=0
+        self.isdirt=True
+    
         ### resource
         self.background = pygame.image.load('background.bmp')
         ### buttons
@@ -131,7 +135,7 @@ class MainUI:
                 self.requestdata=100
                 
             
-        btnmode.off()
+        btnmode.setonoff(False)
         self.displaytext()
         self.updatelabels()
         
@@ -144,7 +148,7 @@ class MainUI:
                 else:
                     b.setonoff(False)
         
-        
+
     def run(self):
         self.eventid=0
         self.requestdata=0
@@ -153,11 +157,15 @@ class MainUI:
             return
         
         for event in pygame.event.get():
+            self.isdirt=True
             if event.type == pygame.QUIT:
                 self.close()
                 
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mousepos = event.pos
+                self.buttondown=True
+                print(self.buttondown)
+                self.mousepos=mousepos
                 for bt in self.buttons:
                     if bt.check(mousepos):
                         self.processbutton(bt.id)
@@ -166,6 +174,9 @@ class MainUI:
                     if btnmode.on:
                         self.updatetogglememory()
                     self.updatelabels()
+            elif event.type == pygame.MOUSEBUTTONUP:
+                self.buttondown=False
+                print(self.buttondown)
                 
     
     def getevent(self):
@@ -177,11 +188,12 @@ class MainUI:
         return self.state
     
     def drawtext(self,line,str):
+        self.isdirt=True
         if line==2:
             self.text2=font2.render(str, True, blue)
         
-    
     def displaytext(self):
+        self.isdirt=True
         self.text = font2.render(statelabel[self.state], True, blue)
         self.text2= font2.render('hello world', True, blue)
         
@@ -196,20 +208,31 @@ class MainUI:
           
     def render(self):
         if self.running==False:
-            return
+            return False
+        
+        if self.isdirt==False:
+            return False
+        self.isdirt=False
         
         # rendering start
-        #screen.blit(self.background, (0,0))
+        screen.blit(self.background, (0,0))
         
         # display text
         self.renderdisplay()
         
         # display buttons
-        btnmode.display(screen)
+        #btnmode.display(screen)
+        btnmode.displayforce(screen)
         for bt in self.buttons:
-            bt.display(screen)
+            #bt.display(screen)
+            bt.displayforce(screen)
+            
+        if self.buttondown:
+            pygame.draw.circle(screen, green, self.mousepos, 60)
 
         pygame.display.update()
+        return True
+        
         
     def close(self):
         self.running = False

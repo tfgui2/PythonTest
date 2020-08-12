@@ -103,8 +103,8 @@ while gui.running:
             
     #gui render
     if (time.time()-lastrendertime)>0.3:
-        gui.render()
-        lastrendertime=time.time()
+        if gui.render():
+            lastrendertime=time.time()
         
     #udp receive
     """

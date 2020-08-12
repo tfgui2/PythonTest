@@ -34,6 +34,8 @@ class Button:
         if self.isdirt:
             self._display(surface)
             self.isdirt=False
+    def displayforce(self, surface):
+        self._display(surface)
         
     def _display(self, surface):
         surface.blit(buttonoff, self.pos())
@@ -64,8 +66,7 @@ class ToggleButton(Button):
     def check(self, point):
         if Button.check(self, point):
             if self.toggleenable:
-                self.on = not self.on
-                self.isdirt=True
+                self.setonoff(not self.on)
             return True
         return False
 
@@ -87,7 +88,3 @@ class ModeButton(ToggleButton):
             surface.blit(buttonmodeon, self.pos())
         else:
             surface.blit(buttonmodeoff, self.pos())
-    def off(self):
-        self.on=False
-        self.isdirt=True
-        

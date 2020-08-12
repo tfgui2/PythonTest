@@ -140,6 +140,8 @@ class MainUI:
         if actions:
             if buttonid<len(actions):
                 self.eventid=actions[buttonid]
+                if self.eventid in request_ids.keys():
+                    self.requestdata=request_ids.get(self.eventid)
         else:
             self.selectsubstate(buttonid)
     
@@ -160,7 +162,7 @@ class MainUI:
             elif self.state==STATE_COM1:
                 self.requestdata=request_ids.get(COM_RADIO_WHOLE_DEC)
             elif self.state==STATE_AUTO:
-                self.requestdata=request_ids.get(AP_BUTTONS)
+                self.requestdata=request_ids.get(AP_MASTER)
             
                 
             

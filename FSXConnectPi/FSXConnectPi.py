@@ -87,8 +87,11 @@ def rotaryrequest(event_id):
     requestid=request_ids.get(event_id)
     if requestid:
         udp.udpbytesend(requestid)
-        reply=udp.udpreceive()
-        processreply(reply)
+        
+def actionrequest(event_id):
+    requestid=request_ids.get(event_id)
+    if requestid:
+        udp.udpbytesend(requestid)
         
 # main loop
 lastrendertime = 0
@@ -106,11 +109,11 @@ while gui.running:
     event_id=gui.getevent()
     if event_id>EVENT_NONE:
         udp.udpbytesend(event_id)
+        actionrequest(event_id)
     else:
         request=gui.requestdata
         if request>0:
             udp.udpbytesend(request)
-            
             
     #gui render
     if (time.time()-lastrendertime)>0.05:

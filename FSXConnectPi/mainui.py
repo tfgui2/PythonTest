@@ -134,7 +134,7 @@ class MainUI:
         for s in states:
             self.buttons[index].setonoff(s)
             index +=1
-            
+        self.isdirt=True
  
 
     ######################################################

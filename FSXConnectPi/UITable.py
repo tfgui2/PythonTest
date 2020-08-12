@@ -13,7 +13,7 @@ SUBSTATE_OBS=61
 SUBSTATE_END=62
 # STATE  0~ max 9
 # button 0~ max 9
-statelabel=['AutoP','COM1','COM2','NAV1','NAV2','GPS','Instr','','','quit']
+statelabel=['AutoP','COM1','COM2','NAV1','NAV2','GPS','Instr','','reset','quit']
 
 buttonlabels={
     STATE_AUTO:['ap','hdg','nav','apr','rev','alt','','','','nav/gps'],
@@ -80,4 +80,6 @@ request_ids={
     NAV2_RADIO_WHOLE_INC:103,
     NAV2_RADIO_FRACT_DEC:103,
     NAV2_RADIO_FRACT_INC:103,
+
+    AP_BUTTONS:104,
     }

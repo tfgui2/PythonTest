@@ -49,10 +49,12 @@ def encoder_run():
     return eventid
 
 def processreply(reply):
-    print(reply)
+    
     if reply==None:
         return
+    
     temp1=reply.decode('utf-8')
+    print(temp1)
     temp=temp1.split(',')
     
     if temp[0]=='1':
@@ -61,8 +63,11 @@ def processreply(reply):
         activefreq=int(temp[1])
         stbyfreq=int(temp[2])
         drawfreq()
+    elif temp[0]=='2':
+        gui.setaptoggle(temp[1])
     else:
         print('nono:', temp[0])
+        
         
 def drawfreq():
     global activefreq

@@ -18,10 +18,16 @@ font1 = pygame.font.Font('freesansbold.ttf', 16)
 font2 = pygame.font.Font('freesansbold.ttf', 30)
 green = (0, 210, 0)
 blue = (0, 0, 128)
-pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
+if IS_FULLSCREEN:
+    pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
 btnmode=ui_button.ModeButton((35,40))
+#init togglememory
 togglememory=[[0,0,0,0,0, 0,0,0,0,0]]*STATE_END
+def inittogglememory():
+    global togglememory
+    togglememory=[[0,0,0,0,0, 0,0,0,0,0]]*STATE_END
+    print('init toggle')
 
 
 class MainUI:
@@ -45,6 +51,20 @@ class MainUI:
         text = font1.render('FSXConnectPI', True, green, blue)
         screen.blit(text, (20,15))
         self.displaytext()
+        
+    def reset(self):
+        self.state=STATE_COM1
+        self.substate=0
+        self.eventid=0
+        self.requestdata=0
+        self.running=True
+        self.buttondown=False
+        self.mousepos=0
+        self.isdirt=True
+        btnmode.setonoff(False)
+        self.displaytext()
+        self.updatelabels()
+        inittogglememory()
           
     def addbutton(self, id, pos, toggle=False):
         btn=ui_button.ToggleButton(id, pos)
@@ -72,6 +92,7 @@ class MainUI:
         for b in self.buttons:
             toggles.append(b.on)
         togglememory[self.state]=toggles
+        print('update toggle')
         
     def restoretoggle(self):
         toggles=togglememory[self.state]
@@ -79,6 +100,7 @@ class MainUI:
         for b in self.buttons:
             b.on=toggles[i]
             i+=1
+        print('restor toggle')
         
             
     def updatelabels(self):
@@ -122,9 +144,13 @@ class MainUI:
             self.selectsubstate(buttonid)
     
     def selectstate(self, buttonid):
-        if buttonid==9:
+        if buttonid==9: #quit
             self.close()
             return
+        elif buttonid==8: #reset
+            self.reset()
+            return
+        
         if buttonid<STATE_END:
             self.state=buttonid
             self.substate=0
@@ -132,7 +158,10 @@ class MainUI:
             if self.state==STATE_GPS:
                 self.eventid=PANEL_3
             elif self.state==STATE_COM1:
-                self.requestdata=100
+                self.requestdata=request_ids.get(COM_RADIO_WHOLE_DEC)
+            elif self.state==STATE_AUTO:
+                self.requestdata=request_ids.get(AP_BUTTONS)
+            
                 
             
         btnmode.setonoff(False)

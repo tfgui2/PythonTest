@@ -83,15 +83,12 @@ def drawfreq():
     gui.drawtext(2, str)
                      
 
-def rotaryrequest(event_id):
+def getrequest(event_id):
     requestid=request_ids.get(event_id)
     if requestid:
-        udp.udpbytesend(requestid)
-        
-def actionrequest(event_id):
-    requestid=request_ids.get(event_id)
-    if requestid:
-        udp.udpbytesend(requestid)
+        return requestid
+    return 0
+
         
 # main loop
 lastrendertime = 0
@@ -102,14 +99,18 @@ while gui.running:
     event_id=encoder_run()
     if event_id>EVENT_NONE:
         udp.udpbytesend(event_id)
-        rotaryrequest(event_id)
+        req=getrequest(event_id)
+        if req>0:
+            udp.udpbytesend(req)
         
     #gui event
     gui.run()
     event_id=gui.getevent()
     if event_id>EVENT_NONE:
         udp.udpbytesend(event_id)
-        actionrequest(event_id)
+        req=getrequest(event_id)
+        if req>0:
+            udp.udpbytesend(req)
     else:
         request=gui.requestdata
         if request>0:

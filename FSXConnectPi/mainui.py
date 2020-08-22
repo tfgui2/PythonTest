@@ -216,7 +216,7 @@ class MainUI:
         
         
     def activecom(self, buttonid):
-        self.substate=self.state+buttonid
+        self.substate=self.state*10+buttonid
         for i in range(4):
             self.buttons[i].setonoff(False)
         self.buttons[buttonid].setonoff(True)

@@ -32,7 +32,7 @@ def inittogglememory():
 
 class MainUI:
     def __init__(self):
-        self.state=STATE_COM1
+        self.state=STATE_COMNAV
         self.substate=0
         self.eventid=0
         self.requestdata=0
@@ -53,7 +53,7 @@ class MainUI:
         self.displaytext()
         
     def reset(self):
-        self.state=STATE_COM1
+        self.state=STATE_COMNAV
         self.substate=0
         self.eventid=0
         self.requestdata=0
@@ -143,6 +143,11 @@ class MainUI:
         if btnmode.on:
             self.selectstate(buttonid)
             return
+        
+        if self.state==STATE_COMNAV:
+            self.processcomnavstate(buttonid)
+            return
+        
         actions=buttonactions.get(self.state)
         if actions:
             if buttonid<len(actions):
@@ -151,7 +156,8 @@ class MainUI:
                     self.requestdata=request_ids.get(self.eventid)
         else:
             self.selectsubstate(buttonid)
-    
+            
+
     def selectstate(self, buttonid):
         if buttonid==9: #quit
             self.close()
@@ -166,16 +172,15 @@ class MainUI:
             # gps로 변경시 panel_3
             if self.state==STATE_GPS:
                 self.eventid=PANEL_3
-            elif self.state==STATE_COM1:
+            elif self.state==STATE_COMNAV:
                 self.requestdata=request_ids.get(COM_RADIO_WHOLE_DEC)
             elif self.state==STATE_AUTO:
                 self.requestdata=request_ids.get(AP_MASTER)
             
-                
-            
         btnmode.setonoff(False)
         self.displaytext()
         self.updatelabels()
+        
         
     def selectsubstate(self, buttonid):
         if buttonid<len(buttonlabels.get(self.state)):
@@ -185,6 +190,36 @@ class MainUI:
                     b.setonoff(True)
                 else:
                     b.setonoff(False)
+        
+    def processcomnavstate(self, buttonid):
+        if buttonid<4:
+            self.activecom(buttonid)
+            return
+        if buttonid==9: #stby
+            if self.substate==SUBSTATE_COM1:
+                self.eventid=COM_STBY_RADIO_SWAP
+            elif self.substate==SUBSTATE_COM2:
+                self.eventid=COM2_RADIO_SWAP
+            elif self.substate==SUBSTATE_NAV1:
+                self.eventid=NAV1_RADIO_SWAP
+            elif self.substate==SUBSTATE_NAV2:
+                self.eventid=NAV2_RADIO_SWAP
+            return
+        
+        actions=buttonactions.get(self.state)
+        if actions:
+            if buttonid<len(actions):
+                self.eventid=actions[buttonid]
+                if self.eventid in request_ids.keys():
+                    self.requestdata=request_ids.get(self.eventid)
+        
+        
+        
+    def activecom(self, buttonid):
+        self.substate=self.state+buttonid
+        for i in range(4):
+            self.buttons[i].setonoff(False)
+        self.buttons[buttonid].setonoff(True)
         
 
     def run(self):

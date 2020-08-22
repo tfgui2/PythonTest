@@ -7,13 +7,14 @@ STATE_NAV1=3
 STATE_NAV2=4
 STATE_GPS=5
 STATE_INST=6
-STATE_END=7
+STATE_LIGHT=7
+STATE_END=8
 SUBSTATE_HDG=60
 SUBSTATE_OBS=61
 SUBSTATE_END=62
 # STATE  0~ max 9
 # button 0~ max 9
-statelabel=['AutoP','COM1','COM2','NAV1','NAV2','GPS','Instr','','reset','quit']
+statelabel=['AutoP','COM1','COM2','NAV1','NAV2','GPS','Instr','Light','reset','quit']
 
 buttonlabels={
     STATE_AUTO:['ap','hdg','nav','apr','rev','alt','','','','nav/gps'],
@@ -22,7 +23,8 @@ buttonlabels={
     STATE_NAV1:['audio','stby','stby',],
     STATE_NAV2:['audio','stby','stby',],
     STATE_GPS:['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
-    STATE_INST:['hdg','obs']
+    STATE_INST:['hdg','obs'],
+    STATE_LIGHT:['strobe','nav','taxi','land','panel'],
     }
 
 buttonactions={
@@ -32,6 +34,7 @@ buttonactions={
     STATE_NAV1:[RADIO_VOR1_IDENT_TOGGLE, NAV1_RADIO_SWAP, NAV1_RADIO_SWAP,],
     STATE_NAV2:[RADIO_VOR2_IDENT_TOGGLE, NAV2_RADIO_SWAP, NAV2_RADIO_SWAP,],
     STATE_GPS :[GPS_NEAREST_BUTTON, GPS_MSG_BUTTON, EVENT_NONE, EVENT_NONE, EVENT_NONE, GPS_DIRECTTO_BUTTON, GPS_MENU_BUTTON, GPS_CLEAR_BUTTON, GPS_ENTER_BUTTON, GPS_CLEAR_ALL_BUTTON],
+    STATE_LIGHT:[STROBES_TOGGLE,TOGGLE_NAV_LIGHTS,TOGGLE_TAXI_LIGHTS,LANDING_LIGHTS_TOGGLE,PANEL_LIGHTS_TOGGLE,],
     }
                 
 

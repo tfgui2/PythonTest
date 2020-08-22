@@ -23,9 +23,7 @@ statelabel=['AutoP','COM/NAV','','','','GPS','Instr','Light','reset','quit']
 buttonlabels={
     STATE_AUTO:['ap','hdg','nav','apr','rev','alt','','','','nav/gps'],
     STATE_COMNAV:['Com1','Com2','Nav1','Nav2','','audio','audio','audio','audio','stby'],
-    STATE_COM2:['audio','stby','stby',],
-    STATE_NAV1:['audio','stby','stby',],
-    STATE_NAV2:['audio','stby','stby',],
+    
     STATE_GPS:['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
     STATE_INST:['hdg','obs'],
     STATE_LIGHT:['strobe','nav','taxi','land','panel'],

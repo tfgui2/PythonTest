@@ -32,7 +32,7 @@ def inittogglememory():
 
 class MainUI:
     def __init__(self):
-        self.state=STATE_COMNAV
+        self.state=0
         self.substate=0
         self.eventid=0
         self.requestdata=0
@@ -53,7 +53,7 @@ class MainUI:
         self.displaytext()
         
     def reset(self):
-        self.state=STATE_COMNAV
+        self.state=0
         self.substate=0
         self.eventid=0
         self.requestdata=0

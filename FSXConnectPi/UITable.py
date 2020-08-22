@@ -13,6 +13,7 @@ STATE_GPS=2
 STATE_G1000=3
 SUBSTATE_FMS=30
 SUBSTATE_ALT=31
+SUBSTATE_HDG_G1k=32
 
 STATE_INST=5
 SUBSTATE_HDG=50
@@ -32,7 +33,7 @@ buttonlabels={
     STATE_COMNAV:['Com1','Com2','Nav1','Nav2','','audio','audio','audio','audio','stby'],
     
     STATE_GPS:['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
-    STATE_G1000:['FMS','ALT'],
+    STATE_G1000:['FMS','ALT','HDG'],
     STATE_INST:['hdg','obs'],
     STATE_LIGHT:['strobe','nav','taxi','land','panel'],
     }
@@ -63,6 +64,7 @@ rotarytable={
     
     SUBSTATE_FMS:[G1000_PFD_CURSOR_BUTTON, G1000_PFD_GROUP_KNOB_INC,G1000_PFD_GROUP_KNOB_DEC],
     SUBSTATE_ALT:[EVENT_NONE, AP_ALT_VAR_INC, AP_ALT_VAR_DEC],
+    SUBSTATE_HDG_G1k:[EVENT_NONE, HEADING_BUG_INC, HEADING_BUG_DEC],
     }
 
 rotarytable2={
@@ -80,6 +82,7 @@ rotarytable2={
     
     SUBSTATE_FMS:[G1000_PFD_CURSOR_BUTTON, G1000_PFD_PAGE_KNOB_INC,G1000_PFD_PAGE_KNOB_DEC],
     SUBSTATE_ALT:[EVENT_NONE, AP_ALT_VAR_INC, AP_ALT_VAR_DEC],
+    SUBSTATE_HDG_G1k:[EVENT_NONE, HEADING_BUG_INC, HEADING_BUG_DEC],
     }    
                 
 #request ids

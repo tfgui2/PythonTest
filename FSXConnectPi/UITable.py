@@ -8,23 +8,30 @@ SUBSTATE_COM2=11
 SUBSTATE_NAV1=12
 SUBSTATE_NAV2=13
 
-STATE_GPS=5
-STATE_INST=6
-SUBSTATE_HDG=60
-SUBSTATE_OBS=61
-SUBSTATE_END=62
-STATE_LIGHT=7
-STATE_END=8
+STATE_GPS=2
+
+STATE_G1000=3
+SUBSTATE_FMS=30
+
+STATE_INST=5
+SUBSTATE_HDG=50
+SUBSTATE_OBS=51
+
+STATE_LIGHT=6
+
+STATE_END=7
 
 # STATE  0~ max 9
 # button 0~ max 9
-statelabel=['AutoP','COM/NAV','','','','GPS','Instr','Light','reset','quit']
+
+statelabel=['AutoP','COM/NAV','GPS','G1000','','Instr','Light','','reset','quit']
 
 buttonlabels={
     STATE_AUTO:['ap','hdg','nav','apr','rev','alt','','','','nav/gps'],
     STATE_COMNAV:['Com1','Com2','Nav1','Nav2','','audio','audio','audio','audio','stby'],
     
     STATE_GPS:['nrst','msg', '', '', '', 'dir','menu','clr','ent','clrall'],
+    STATE_G1000:['FMS',],
     STATE_INST:['hdg','obs'],
     STATE_LIGHT:['strobe','nav','taxi','land','panel'],
     }
@@ -52,6 +59,8 @@ rotarytable={
     SUBSTATE_COM2:[COM2_RADIO_SWAP, COM2_RADIO_WHOLE_INC, COM2_RADIO_WHOLE_DEC],
     SUBSTATE_NAV1:[NAV1_RADIO_SWAP, NAV1_RADIO_WHOLE_INC, NAV1_RADIO_WHOLE_DEC],
     SUBSTATE_NAV2:[NAV2_RADIO_SWAP, NAV2_RADIO_WHOLE_INC, NAV2_RADIO_WHOLE_DEC],
+    
+    SUBSTATE_FMS:[G1000_PFD_CURSOR_BUTTON, G1000_PFD_GROUP_KNOB_INC,G1000_PFD_GROUP_KNOB_DEC],
     }
 
 rotarytable2={
@@ -66,6 +75,8 @@ rotarytable2={
     SUBSTATE_COM2:[COM2_RADIO_SWAP, COM2_RADIO_FRACT_INC, COM2_RADIO_FRACT_DEC],
     SUBSTATE_NAV1:[NAV1_RADIO_SWAP, NAV1_RADIO_FRACT_INC, NAV1_RADIO_FRACT_DEC],
     SUBSTATE_NAV2:[NAV2_RADIO_SWAP, NAV2_RADIO_FRACT_INC, NAV2_RADIO_FRACT_DEC],
+    
+    SUBSTATE_FMS:[G1000_PFD_CURSOR_BUTTON, G1000_PFD_PAGE_KNOB_INC,G1000_PFD_PAGE_KNOB_DEC],
     
     }    
                 

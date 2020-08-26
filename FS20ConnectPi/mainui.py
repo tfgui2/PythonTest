@@ -25,12 +25,11 @@ bgcolor=(30,30,60)
 
 
 import ui_button
-
+import ui_page
 
 class MainUI:
     def __init__(self):
-        self.buttons = []
-        self.makebuttons()
+        self.makepage()
         self.reset()
         
     def reset(self):
@@ -39,33 +38,9 @@ class MainUI:
         self.isdirt=True
         self.eventid=EVENT_NONE
         self.requestid=0
+        self.pageid=0
         self.processbutton(0)
-        
-    def addbutton(self, pos, toggle=False):
-        id=len(self.buttons)
-        btn=ui_button.ToggleButton(id, pos)
-        btn.settoggleenable(toggle)
-        self.buttons.append(btn)
-        
-    def makebuttons(self):
-        #buttonid : 0 ~ 9
-        dx=130
-        x=50
-        y=110
-        for i in range(3):
-            self.addbutton((x,y))
-            x +=dx
-        x=50
-        y=300
-        for i in range(3):
-            self.addbutton((x,y))
-            x +=dx
-            
-        btnlabels=['nav freq', 'hdg/vor', 'Alt/vs', 'G500', 'G1000PFD', 'G1000MFD']
-        i=0
-        for bt in self.buttons:
-            bt.setlabel(btnlabels[i])
-            i+=1
+        self.selectpage(self.pageid)
         
     def enc1text(self, text):
         self.text1 = font2.render(text, True, green)
@@ -82,9 +57,43 @@ class MainUI:
         screen.blit(self.text1, (x-self.text1.get_width(),line1))
         screen.blit(self.text2, (x-self.text2.get_width(),line2))
         
-    def render_buttons(self):
-        for bt in self.buttons:
+    def makepage(self):
+        self.pagebuttons=[]
+        
+        btn=ui_button.RectButton(0, pygame.Rect(0,0, 100, 240))
+        btn.setlabel('page1')
+        self.pagebuttons.append(btn)
+        
+        btn=ui_button.RectButton(1, pygame.Rect(0,240, 100, 240))
+        btn.setlabel('page2')
+        self.pagebuttons.append(btn)
+        
+        self.pages=[]
+        
+        page=ui_page.Page(pygame.Rect(100,0, 500, 480))
+        self.pages.append(page)
+        
+        btnlabels=['nav freq', 'hdg/vor', 'Alt/vs', 'G500', 'G1000PFD', 'G1000MFD']
+        for i in range(3):
+            b=ui_button.ToggleButton(i, (0,0))
+            x=i*130 + 100
+            y=100
+            page.addbutton(b, (x,y), btnlabels[b.id])
+   
+        for i in range(3):
+            b=ui_button.ToggleButton(i+3, (0,0))
+            x=i*130 + 100
+            y=300
+            page.addbutton(b, (x,y), btnlabels[b.id])
+            
+        page=ui_page.Page(pygame.Rect(100,0, 500, 480))
+        self.pages.append(page)
+            
+    def render_page(self):
+        for bt in self.pagebuttons:
             bt.displayforce(screen)
+        page=self.pages[self.pageid]
+        page.display(screen)
 
     def render(self):
         if self.isdirt==False:
@@ -94,12 +103,12 @@ class MainUI:
         # rendering start
         screen.fill(bgcolor)
         
+        # page menu
+        self.render_page()
+        
         # enctext
         self.render_enc()
         
-        # buttons
-        self.render_buttons()
-
         if self.buttondown:
             pygame.draw.circle(screen, green, self.mousepos, 60)
 
@@ -121,19 +130,31 @@ class MainUI:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 self.mousepos = event.pos
                 self.buttondown=True
-                self.checkbutton(event.pos)
+                self.checkpage(event.pos)
                 
             elif event.type == pygame.MOUSEBUTTONUP:
                 self.buttondown=False
                 
         return True
     
-    def checkbutton(self, mousepos):
-        for bt in self.buttons:
-            if bt.check(mousepos):
-                self.processbutton(bt.id)
+    def checkpage(self, mousepos):
+        for pg in self.pagebuttons:
+            if pg.check(mousepos):
+                self.selectpage(pg.id)
                 return
-    
+        page=self.pages[self.pageid]
+        btid=page.checkbutton(mousepos)
+        if btid>=0:
+            self.processbutton(btid)
+            
+    def selectpage(self, pageid):
+        self.pageid=pageid
+        for pg in self.pagebuttons:
+            if pg.id==pageid:
+                pg.setonoff(True)
+            else:
+                pg.setonoff(False)
+  
     def processbutton(self, buttonid):
         if buttonid==0:
             self.enc1state=RE_NAV1_WHOLE
@@ -164,9 +185,7 @@ class MainUI:
             self.enc1state=RE_G1000_MFD_GROUP
             self.enc2state=RE_G1000_MFD_PAGE
             self.enc1text('G1000MFD')
-            self.enc2text('G1000MFD')
-        
-            
+            self.enc2text('G1000MFD')      
     
     def getevent(self):
         return self.eventid

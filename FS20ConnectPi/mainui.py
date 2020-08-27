@@ -205,9 +205,9 @@ class MainUI:
     def processreply(self, reply):
         requestid=int(reply[0])
         if requestid in (100,101,102,103):
-            activefreq=str(10000+int(reply(1)))
-            stbyfreq=str(10000+int(reply[2]))
-            self.setfreq(activefreq,stbyfreq)
+            af=10000+int(reply(1))
+            sf=10000+int(reply[2])
+            self.setfreq('%d'%af,'%d'%sf)
             
     def setfreq(self, actf, stbf):
         self.activefreq = font2.render(actf, True, green)

@@ -87,4 +87,3 @@ while True:
         processreply(reply)
         
 gui.close()
-    

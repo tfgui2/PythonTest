@@ -38,15 +38,8 @@ def processreply(reply):
         return
     
     temp1=reply.decode('utf-8')
-    print(temp1)
     temp=temp1.split(',')
-    
-    requestid=int(temp[0])
-    if requestid in (100,101,102,103):
-        pass
-        
-    elif requestid==104:
-        pass
+    gui.processreply(temp)
 
 
 # main loop

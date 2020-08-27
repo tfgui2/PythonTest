@@ -41,6 +41,7 @@ class MainUI:
         self.pageid=0
         self.processbutton(0)
         self.selectpage(self.pageid)
+        self.setfreq('activefreq','stbyfreq')
         
     def enc1text(self, text):
         self.text1 = font2.render(text, True, green)
@@ -108,6 +109,8 @@ class MainUI:
         
         # enctext
         self.render_enc()
+        
+        self.render_freq()
         
         if self.buttondown:
             pygame.draw.circle(screen, green, self.mousepos, 60)
@@ -198,6 +201,27 @@ class MainUI:
     
     def getenc2state(self):
         return self.enc2state
+    
+    def processreply(self, reply):
+        requestid=int(reply[0])
+        if requestid in (100,101,102,103):
+            activefreq='1'+reply[0]
+            stbyfreq='1'+reply[2]
+            self.setfreq(activefreq,stbyfreq)
+            
+    def setfreq(self, actf, stbf):
+        self.activefreq = font2.render(actf, True, green)
+        self.stbyfreq = font2.render(stbf, True, green)
+        
+    def render_freq(self):
+        x=600
+        line1 = 200
+        line2 = 240
+        screen.blit(self.activefreq, (x,line1))
+        screen.blit(self.stbyfreq, (x,line2))
+    
+        
+    
         
 if __name__=='__main__':
     gui=MainUI()

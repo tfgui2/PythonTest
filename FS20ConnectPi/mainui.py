@@ -205,7 +205,7 @@ class MainUI:
     def processreply(self, reply):
         requestid=int(reply[0])
         if requestid in (100,101,102,103):
-            af=10000+int(reply(1))
+            af=10000+int(reply[1])
             sf=10000+int(reply[2])
             self.setfreq('%d'%af,'%d'%sf)
             

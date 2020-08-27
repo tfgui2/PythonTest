@@ -42,9 +42,7 @@ def processreply(reply):
     gui.processreply(temp)
 
 
-requestgroup={
-    [RE_NAV1_WHOLE,RE_NAV1_FRACT]:REQ_NAV1_FREQ,
-    }
+
 # main loop
 import time
 lastrendertime = 0
@@ -55,14 +53,16 @@ while True:
     event_id=encoder_run(enc1, gui.getenc1state())
     if event_id>EVENT_NONE:
         udp.udpbytesend(event_id)
+        #request
+        if gui.getenc1state()==RE_NAV1_WHOLE:
+            udp.udpbytesend(REQ_NAV1_FREQ)
         
     event_id=encoder_run(enc2, gui.getenc2state())
     if event_id>EVENT_NONE:
         udp.udpbytesend(event_id)
-        
-    #request
-    if gui.getenc1state()==RE_NAV1_WHOLE:
-        udp.udpbytesend(REQ_NAV1_FREQ)
+        #request
+        if gui.getenc2state()==RE_NAV1_FRACT:
+            udp.udpbytesend(REQ_NAV1_FREQ)
         
     #gui event
     if gui.run() == False:

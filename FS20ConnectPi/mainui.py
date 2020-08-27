@@ -205,13 +205,14 @@ class MainUI:
     def processreply(self, reply):
         requestid=int(reply[0])
         if requestid in (100,101,102,103):
-            activefreq='1'+reply[0]
-            stbyfreq='1'+reply[2]
+            activefreq=str(10000+int(reply(1)))
+            stbyfreq=str(10000+int(reply[2]))
             self.setfreq(activefreq,stbyfreq)
             
     def setfreq(self, actf, stbf):
         self.activefreq = font2.render(actf, True, green)
         self.stbyfreq = font2.render(stbf, True, green)
+        self.isdirt=True
         
     def render_freq(self):
         x=600

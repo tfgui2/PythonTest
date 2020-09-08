@@ -71,6 +71,7 @@ class MainUI:
         
         self.pages=[]
         
+        # page 1
         page=ui_page.Page(pygame.Rect(100,0, 500, 480))
         self.pages.append(page)
         
@@ -87,8 +88,17 @@ class MainUI:
             y=300
             page.addbutton(b, (x,y), btnlabels[b.id])
             
+        # page 2
         page=ui_page.Page(pygame.Rect(100,0, 500, 480))
         self.pages.append(page)
+        
+        btnlabels=['hdg', 'vs', 'flc']
+        for i in range(3):
+            b=ui_button.ToggleButton(i+10, (0,0))
+            x=i*130 + 100
+            y=100
+            page.addbutton(b, (x,y), btnlabels[b.id-10])
+   
             
     def render_page(self):
         for bt in self.pagebuttons:
@@ -188,7 +198,19 @@ class MainUI:
             self.enc1state=RE_G1000_MFD_GROUP
             self.enc2state=RE_G1000_MFD_PAGE
             self.enc1text('G1000MFD')
-            self.enc2text('G1000MFD')      
+            self.enc2text('G1000MFD')
+            
+            
+        elif buttonid == 10: # ap_hdg
+            self.eventid=AP_HDG_HOLD
+            pass
+        elif buttonid == 11: # ap_vs
+            self.eventid=AP_ALT_HOLD
+            pass
+        elif buttonid == 12: # ap_flc
+            
+            pass
+            
     
     def getevent(self):
         return self.eventid
